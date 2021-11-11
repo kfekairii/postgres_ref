@@ -71,3 +71,66 @@ where user_id=3
 SELECT url, username FROM photos
 JOIN users on users.id = photos.user_id
 ```
+
+# Joins and Aggregation
+
+## 1. Joins
+
+- produces values by merging together rows from diffrent related tables.
+- used to find data that involves multiple resources.
+
+### Inner Join
+
+```sql
+SELECT url, username FROM photos
+JOIN users on users.id = photos.user_id
+```
+
+If there is no match, the photo will be droped from the result.
+
+### Left Join
+
+```sql
+SELECT url, username FROM photos
+LEFT JOIN users on users.id = photos.user_id
+```
+
+Will keep photos with unmatched users.
+
+### Right Join
+
+```sql
+SELECT url, username FROM photos
+RIGHT JOIN users on users.id = photos.user_id
+```
+
+will include all users even if the don't have a photo.
+
+### Three way join
+
+```sql
+SELECT
+	comments.id AS comment_id,
+	username,
+	contents,
+	url,
+	photos.user_id,
+	comments.user_id
+FROM comments
+JOIN photos ON photos.id = comments.photo_id
+JOIN users ON comments.user_id = users.id AND users.id = photos.user_id
+```
+
+## 2. Grouping
+
+- Reduces many rows down to fewer rows.
+- Done with '`GROUP BY`' key word.
+
+```sql
+SELECT user_id, COUNT(id) FROM comments
+GROUP BY user_id
+```
+
+## 3. Aggregation
+
+- Looks at many rows and calculates a single value
